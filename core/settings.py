@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -147,17 +148,18 @@ REST_FRAMEWORK = {
     
     ),
 }
-
+#https://django-rest-framework-simplejwt.readthedocs.io/en/latest/
 SIMPLE_JWT = {
-   'AUTH_HEADER_TYPES': ('JWT',),
+   'AUTH_HEADER_TYPES': ('JWT', 'Beater', 'Token'),
+   "ACCESS_TOKEN_LIFETIME": timedelta(hours=2),
+   "REFRESH_TOKEN_LIFETIME": timedelta(days=31),
 }
 
 DJOSER = {
     'PASSWORD_RESET_CONFIRM_URL': '#/password/reset/confirm/{uid}/{token}',
     'USERNAME_RESET_CONFIRM_URL': '#/username/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': '#/activate/{uid}/{token}',
+    'ACTIVATION_URL': '/activate/?uid={uid}&token={token}',
     'SEND_ACTIVATION_EMAIL': True,
-    'SERIALIZERS': {},
 }
 
 EMAIL_HOST = 'smtp.gmail.com'
@@ -166,6 +168,10 @@ EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')
 EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_USE_TLS = config('USE_TLS', cast=bool)
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+
 
 
 
