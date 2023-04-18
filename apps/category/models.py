@@ -1,7 +1,6 @@
 from django.db import models
 from slugify import slugify
 
-
 class Category(models.Model):
     slug = models.SlugField(primary_key=True,blank=True, max_length=80)
     title  = models.CharField(max_length=80, unique=True)
